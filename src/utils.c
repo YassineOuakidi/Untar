@@ -60,7 +60,7 @@ char *get_header(int fd)
 	}
 
 	int all_zeros = 1;
-	for(int i = 0 ; i <512 ; i++){
+	for(int i = 0 ; i < 512 ; i++){
 		if(header[i]!='\0')
 		{
 			all_zeros = 0;
@@ -97,6 +97,7 @@ char *get_dirname(char *name)
 		dirname[i] = name[i];
 		i++;
 	}
+	dirname[i] = '\0';
 	return ft_strdup(dirname , 100);
 }
 
@@ -108,6 +109,3 @@ int get_mode_decimal(char *mode)
 		ans += ans * 8 + (mode[i] - '0');
 	return ans;
 }
-
-
-

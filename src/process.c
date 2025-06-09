@@ -4,12 +4,16 @@
 void write_to_file(int dest , struct HEADER header , int src)
 {
 	int size = get_decimal(atoi(header.size));
+
 	char *text = malloc(size);
 	read( src , text , size);
+	
 	write(dest , text , size);
 	free(text);
+	
 	int nearest_multiple = get_nearest_mult(size);
 	char *offset_text = malloc(nearest_multiple - size);
+	
 	read(src , offset_text , nearest_multiple - size);
 	free(offset_text);
 }
@@ -17,8 +21,7 @@ void write_to_file(int dest , struct HEADER header , int src)
 
 void write_changes(struct HEADER header , int fd)
 {
-	printf("%s\n" , header.name);
-	
+	printf("%s\n" , get_dirname(header.name)); 
 	if(mkdir(get_dirname(header.name) , 0755 ) == -1 && errno != EEXIST)
 	{
 		not_done = 0;
@@ -46,7 +49,5 @@ void process(int fd)
 		make_header_struct( &header_struct , header);
 	
 		write_changes(header_struct , fd);
-		
-		//free_struct(header_struct);
 	}
 }
